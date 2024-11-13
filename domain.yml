@@ -1,31 +1,16 @@
 version: "3.1"
 
 intents:
-  # - greet
-  # - greet_TH
-  # - goodbye
-  - ask_course_name_by_id
-  - ask_course_point_by_id
   - bot_challenge
-
-entities:
-  - courseID
 
 responses:
 
   utter_iamabot:
     - text: "I am a bot, powered by Rasa."
 
-slots:
-  courseID:
-    type: text
-    mappings:
-      - type: from_entity
-        entity: courseID
 
 actions:
-  - action_get_course_info
-  - action_get_course_point
+  - action_query_typhoon
 
 
 session_config:

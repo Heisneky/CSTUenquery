@@ -2,16 +2,6 @@ version: "3.1"
 
 nlu:
 
-- intent: ask_course_name_by_id
-  examples: |
-    - รหัสวิชา [พบ.291](courseID) ชื่ออะไร
-    - วิชาอะไรมีรหัสวิชา [มธ.100](courseID)
-    - รหัสวิชา [มธ.102](courseID) มีชื่ออะไร
-    - วิชาที่มีรหัสวิชา [มธ.105](courseID) ชื่ออะไร
-    - วิชาอะไรมีรหัสวิชา [จ.252](courseID)
-    - วิชาอะไรมีรหัสวิชา [จ.252](courseID)
-    
-
 - intent: bot_challenge
   examples: |
     - are you a bot?
