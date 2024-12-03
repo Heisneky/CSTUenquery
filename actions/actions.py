@@ -36,14 +36,21 @@ class ActionFetchCourseName(Action):
             cursor = connection.cursor()
 
             # Query เพื่อดึงชื่อวิชาจากรหัสวิชา
-            cursor.execute("SELECT courseName_TH FROM `courses-61` WHERE courseID_TH=%s", (course_code,))
-            course_name = cursor.fetchone()
+            cursor.execute("SELECT courseName_TH, courseDescrip_TH FROM `courses-61` WHERE courseID_TH=%s", (course_code,))
+
+            course_name_and_description = cursor.fetchone()
 
             # ใช้ print() เพื่อตรวจสอบผลลัพธ์จาก query
-            print(f"Database query result: {course_name}")
+            print(f"Database query result: {course_name_and_description}")
 
-            if course_name:
-                response = f"ชื่อวิชาของ {course_code} คือ {course_name[0]}"
+            if course_name_and_description:
+                # course_name_and_description[0] คือ courseName_TH
+                # course_name_and_description[1] คือ courseDescrip_TH
+                response = (
+                    f"ชื่อวิชาของ {course_code} คือ {course_name_and_description[0]} "
+                    f"\nโดยจะมีเนื้อหาประมาณนี้ครับ:\n{course_name_and_description[1]}"
+                )
+
             else:
                 response = f"ไม่พบข้อมูลสำหรับรหัสวิชา {course_code}"
 
