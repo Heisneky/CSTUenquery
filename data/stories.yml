@@ -5,3 +5,13 @@ stories:
     steps:
       - intent: nlu_fallback
       - action: action_query_typhoon
+
+  - story: chit chat professor
+    steps:
+      - intent: chit_chat_professor
+      - action: action_query_typhoon
+
+  - story: ask course name
+    steps:
+      - intent: ask_course_name
+      - action: action_fetch_course_name

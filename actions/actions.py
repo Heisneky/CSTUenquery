@@ -1,6 +1,65 @@
-from rasa_sdk import Action
 import requests
 import json
+from rasa_sdk import Action, Tracker
+from rasa_sdk.executor import CollectingDispatcher
+from typing import Any, Text, Dict, List
+import mysql.connector
+
+class ActionFetchCourseName(Action):
+    def name(self) -> Text:
+        return "action_fetch_course_name"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        # ดึง course_code จาก slot ที่ผู้ใช้ระบุ
+        course_code = tracker.get_slot('course_code')
+
+        # ใช้ print() เพื่อแสดงค่าของ course_code
+        print(f"Received course_code: {course_code}")
+
+        if not course_code:
+            dispatcher.utter_message(text="กรุณาระบุรหัสวิชาที่ถูกต้อง")
+            return []
+
+        # เชื่อมต่อฐานข้อมูล MySQL
+        try:
+            connection = mysql.connector.connect(
+                host="localhost",
+                user="root",  # ชื่อผู้ใช้ของคุณ
+                password="",  # รหัสผ่านของคุณ
+                database="cstu"
+            )
+            print("Database connection successful")
+
+            cursor = connection.cursor()
+
+            # Query เพื่อดึงชื่อวิชาจากรหัสวิชา
+            cursor.execute("SELECT courseName_TH FROM `courses-61` WHERE courseID_TH=%s", (course_code,))
+            course_name = cursor.fetchone()
+
+            # ใช้ print() เพื่อตรวจสอบผลลัพธ์จาก query
+            print(f"Database query result: {course_name}")
+
+            if course_name:
+                response = f"ชื่อวิชาของ {course_code} คือ {course_name[0]}"
+            else:
+                response = f"ไม่พบข้อมูลสำหรับรหัสวิชา {course_code}"
+
+            dispatcher.utter_message(text=response)
+
+        except mysql.connector.Error as err:
+            print(f"Error connecting to MySQL: {err}")
+            dispatcher.utter_message(text="เกิดข้อผิดพลาดในการเชื่อมต่อฐานข้อมูล")
+
+        finally:
+            # ปิดการเชื่อมต่อฐานข้อมูล
+            if connection:
+                connection.close()
+                print("Database connection closed")
+
+        return []
 
 class ActionQueryTyphoon(Action):
     def name(self):

@@ -2,8 +2,24 @@ version: "3.1"
 
 intents:
   - bot_challenge
+  - ask_course_name
+  - nlu_fallback
+  - chit_chat_professor
+
+entities:
+  - course_code
+
+slots:
+  course_code:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: course_code
 
 responses:
+
+  utter_chit_chat_professor:
+    - text: "สุดหล่อ"
 
   utter_iamabot:
     - text: "I am a bot, powered by Rasa."
@@ -11,6 +27,7 @@ responses:
 
 actions:
   - action_query_typhoon
+  - action_fetch_course_name
 
 
 session_config:
