@@ -3,8 +3,71 @@ import json
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from typing import Any, Text, Dict, List
+from rasa_sdk.events import SlotSet
 import mysql.connector
 
+class ActionFetchCoursePrerequisites(Action):
+    def name(self) -> Text:
+        return "action_fetch_course_Prerequisites"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        # ดึง course_code จาก slot ที่ผู้ใช้ระบุ
+        course_code = tracker.get_slot('course_code')
+
+        # ใช้ print() เพื่อแสดงค่าของ course_code
+        print(f"Received P course_code: {course_code}")
+
+        if not course_code:
+            dispatcher.utter_message(text="กรุณาระบุรหัสวิชาที่ถูกต้อง")
+            return []
+
+        # เชื่อมต่อฐานข้อมูล MySQL
+        try:
+            connection = mysql.connector.connect(
+                host="localhost",
+                user="root",  # ชื่อผู้ใช้ของคุณ
+                password="",  # รหัสผ่านของคุณ
+                database="cstu"
+            )
+            print("Database connection successful")
+
+            cursor = connection.cursor()
+
+            # Query เพื่อดึงชื่อวิชาจากรหัสวิชา
+            cursor.execute("SELECT mustTaken FROM `courses-61` WHERE courseID_TH=%s", (course_code,))
+
+            course_Prerequisites = cursor.fetchone()
+
+            # ใช้ print() เพื่อตรวจสอบผลลัพธ์จาก query
+            print(f"Database query result: {course_Prerequisites}")
+
+            if course_Prerequisites:
+                response = (
+                    f"ถ้าคุณจะลงเรียนวิชา {course_code} ได้คุณต้องเคยศึกษาวิชา"
+                    f"\n {course_Prerequisites[0]}\n"
+                )
+
+            else:
+                response = f"ไม่พบข้อมูลสำหรับรหัสวิชา {course_code}"
+
+            dispatcher.utter_message(text=response)
+
+        except mysql.connector.Error as err:
+            print(f"Error connecting to MySQL: {err}")
+            dispatcher.utter_message(text="เกิดข้อผิดพลาดในการเชื่อมต่อฐานข้อมูล")
+
+        finally:
+            # ปิดการเชื่อมต่อฐานข้อมูล
+            if connection:
+                connection.close()
+                print("Database connection closed")
+
+        # ล้างค่า slot หลังจากตอบคำถามเสร็จ
+        # return [SlotSet("course_code", None)]
+        return []
 class ActionFetchCourseName(Action):
     def name(self) -> Text:
         return "action_fetch_course_name"
@@ -68,6 +131,261 @@ class ActionFetchCourseName(Action):
 
         return []
 
+class ActionFetchCourseCredit(Action):
+    def name(self) -> Text:
+        return "action_fetch_course_credit"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        # ดึง course_code จาก slot ที่ผู้ใช้ระบุ
+        course_code = tracker.get_slot('course_code')
+
+        # ใช้ print() เพื่อแสดงค่าของ course_code
+        print(f"Received C course_code: {course_code}")
+
+        if not course_code:
+            dispatcher.utter_message(text="กรุณาระบุรหัสวิชาที่ถูกต้อง")
+            return []
+
+        # เชื่อมต่อฐานข้อมูล MySQL
+        try:
+            connection = mysql.connector.connect(
+                host="localhost",
+                user="root",  # ชื่อผู้ใช้ของคุณ
+                password="",  # รหัสผ่านของคุณ
+                database="cstu"
+            )
+            print("Database connection successful")
+
+            cursor = connection.cursor()
+
+            # Query เพื่อดึงชื่อวิชาจากรหัสวิชา
+            cursor.execute("SELECT courseUnit, courseHour FROM `courses-61` WHERE courseID_TH=%s", (course_code,))
+
+            course_credit = cursor.fetchone()
+
+            # ใช้ print() เพื่อตรวจสอบผลลัพธ์จาก query
+            print(f"Database query result: {course_credit}")
+
+            if course_credit:
+                response = (
+                    f"วิชา {course_code} มีหน่วยกิต {course_credit[0]} "
+                )
+
+            else:
+                response = f"ไม่พบข้อมูลสำหรับรหัสวิชา {course_code}"
+
+            dispatcher.utter_message(text=response)
+
+        except mysql.connector.Error as err:
+            print(f"Error connecting to MySQL: {err}")
+            dispatcher.utter_message(text="เกิดข้อผิดพลาดในการเชื่อมต่อฐานข้อมูล")
+
+        finally:
+            # ปิดการเชื่อมต่อฐานข้อมูล
+            if connection:
+                connection.close()
+                print("Database connection closed")
+
+        return []
+
+class ActionFetchCoursePrerequisitesEN(Action):
+    def name(self) -> Text:
+        return "action_fetch_course_Prerequisites_en"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        # ดึง course_code จาก slot ที่ผู้ใช้ระบุ
+        course_code = tracker.get_slot('course_code_en')
+
+        # ใช้ print() เพื่อแสดงค่าของ course_code
+        print(f"Received EP course_code: {course_code}")
+
+        if not course_code:
+            dispatcher.utter_message(text="not correct course code")
+            return []
+
+        # เชื่อมต่อฐานข้อมูล MySQL
+        try:
+            connection = mysql.connector.connect(
+                host="localhost",
+                user="root",  # ชื่อผู้ใช้ของคุณ
+                password="",  # รหัสผ่านของคุณ
+                database="cstu"
+            )
+            print("Database connection successful")
+
+            cursor = connection.cursor()
+
+            # Query เพื่อดึงชื่อวิชาจากรหัสวิชา
+            cursor.execute("SELECT mustTaken_EN FROM `courses-61` WHERE courseID_EN=%s", (course_code,))
+
+            course_Prerequisites = cursor.fetchone()
+
+            # ใช้ print() เพื่อตรวจสอบผลลัพธ์จาก query
+            print(f"Database query result: {course_Prerequisites}")
+
+            if course_Prerequisites:
+                # course_name_and_description[0] คือ courseName_TH
+                # course_name_and_description[1] คือ courseDescrip_TH
+                response = (
+                    f"If you going to enroll {course_code} you must completed"
+                    f"\n {course_Prerequisites[0]}\n"
+                )
+
+            else:
+                response = f"No data found for the course {course_code}"
+
+            dispatcher.utter_message(text=response)
+
+        except mysql.connector.Error as err:
+            print(f"Error connecting to MySQL: {err}")
+            dispatcher.utter_message(text="เกิดข้อผิดพลาดในการเชื่อมต่อฐานข้อมูล")
+
+        finally:
+            # ปิดการเชื่อมต่อฐานข้อมูล
+            if connection:
+                connection.close()
+                print("Database connection closed")
+
+        # ล้างค่า slot หลังจากตอบคำถามเสร็จ
+        # return [SlotSet("course_code", None)]
+        return []
+class ActionFetchCourseNameEN(Action):
+    def name(self) -> Text:
+        return "action_fetch_course_name_en"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        # ดึง course_code จาก slot ที่ผู้ใช้ระบุ
+        course_code = tracker.get_slot('course_code_en')
+
+        # ใช้ print() เพื่อแสดงค่าของ course_code
+        print(f"Received EN course_code: {course_code}")
+
+        if not course_code:
+            dispatcher.utter_message(text="not correct course code")
+            return []
+
+        course_code = course_code.upper()
+        print(f"Normalized course_code: {course_code}")
+        # เชื่อมต่อฐานข้อมูล MySQL
+        try:
+            connection = mysql.connector.connect(
+                host="localhost",
+                user="root",  # ชื่อผู้ใช้ของคุณ
+                password="",  # รหัสผ่านของคุณ
+                database="cstu"
+            )
+            print("Database connection successful")
+
+            cursor = connection.cursor()
+
+            # Query เพื่อดึงชื่อวิชาจากรหัสวิชา
+            cursor.execute("SELECT courseName_EN, courseDescrip_EN FROM `courses-61` WHERE courseID_EN=%s", (course_code,))
+
+            course_name_and_description = cursor.fetchone()
+
+            # ใช้ print() เพื่อตรวจสอบผลลัพธ์จาก query
+            print(f"Database query result: {course_name_and_description}")
+
+            if course_name_and_description:
+                # course_name_and_description[0] คือ courseName_EN
+                # course_name_and_description[1] คือ courseDescrip_EN
+                response = (
+                    f"The course {course_code} is named {course_name_and_description[0]} "
+                    f"\nIt covers the following content:\n{course_name_and_description[1]}"
+                )
+
+            else:
+                response = f"No data found for the course {course_code}"
+
+            dispatcher.utter_message(text=response)
+
+        except mysql.connector.Error as err:
+            print(f"Error connecting to MySQL: {err}")
+            dispatcher.utter_message(text="เกิดข้อผิดพลาดในการเชื่อมต่อฐานข้อมูล")
+
+        finally:
+            # ปิดการเชื่อมต่อฐานข้อมูล
+            if connection:
+                connection.close()
+                print("Database connection closed")
+
+        # ล้างค่า slot หลังจากตอบคำถามเสร็จ
+        # return [SlotSet("course_code", None)]
+        return []
+
+class ActionFetchCourseCreditEN(Action):
+    def name(self) -> Text:
+        return "action_fetch_course_credit_en"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        # ดึง course_code จาก slot ที่ผู้ใช้ระบุ
+        course_code = tracker.get_slot('course_code_en')
+
+        # ใช้ print() เพื่อแสดงค่าของ course_code
+        print(f"Received C course_code: {course_code}")
+
+        if not course_code:
+            dispatcher.utter_message(text="not correct course code")
+            return []
+
+        # เชื่อมต่อฐานข้อมูล MySQL
+        try:
+            connection = mysql.connector.connect(
+                host="localhost",
+                user="root",  # ชื่อผู้ใช้ของคุณ
+                password="",  # รหัสผ่านของคุณ
+                database="cstu"
+            )
+            print("Database connection successful")
+
+            cursor = connection.cursor()
+
+            # Query เพื่อดึงชื่อวิชาจากรหัสวิชา
+            cursor.execute("SELECT courseUnit, courseHour FROM `courses-61` WHERE courseID_EN=%s", (course_code,))
+
+            course_Credit = cursor.fetchone()
+
+            # ใช้ print() เพื่อตรวจสอบผลลัพธ์จาก query
+            print(f"Database query result: {course_Credit}")
+
+            if course_Credit:
+                # course_Credit[0] คือ courseUnit
+                # course_Credit[1] คือ courseHour
+                response = (
+                    f"The course {course_code} has Credit {course_Credit[0]} {course_Credit[1]}"
+                )
+
+            else:
+                response = f"No data found for the course  {course_code}"
+
+            dispatcher.utter_message(text=response)
+
+        except mysql.connector.Error as err:
+            print(f"Error connecting to MySQL: {err}")
+            dispatcher.utter_message(text="เกิดข้อผิดพลาดในการเชื่อมต่อฐานข้อมูล")
+
+        finally:
+            # ปิดการเชื่อมต่อฐานข้อมูล
+            if connection:
+                connection.close()
+                print("Database connection closed")
+
+        # ล้างค่า slot หลังจากตอบคำถามเสร็จ
+        # return [SlotSet("course_code", None)]
+        return []
+
 class ActionQueryTyphoon(Action):
     def name(self):
         return "action_query_typhoon"
@@ -119,3 +437,31 @@ class ActionQueryTyphoon(Action):
             dispatcher.utter_message(text=f"เกิดข้อผิดพลาดบางประการ: {err}")
 
         return []
+
+# class ActionQueryTyphoon(Action):
+#     def name(self):
+#         return "action_query_typhoon"
+
+#     def run(self, dispatcher, tracker, domain):
+#         # รับข้อความจากผู้ใช้
+#         user_message = tracker.latest_message.get("text")
+
+#         # ระบุ path ของไฟล์ .gguf ที่ดาวน์โหลดมา
+#         model_path = os.path.join(os.getcwd(), "./unsloth.Q4_K_M.gguf")  # ตรวจสอบ path ที่ถูกต้อง
+#         print(f"Model path: {model_path}")  # ตรวจสอบ path
+
+#         try:
+#             # สร้างอินสแตนซ์ของ Llama และโหลดโมเดลจากไฟล์ .gguf
+#             llm = Llama(model_path=model_path)  # ใช้ model_path ตรงๆ
+            
+#             # ใช้งานโมเดลเพื่อให้คำตอบ
+#             response = llm(user_message)
+#             print(f"Response: {response}")  # ตรวจสอบผลลัพธ์จากโมเดล
+            
+#             # ส่งข้อความตอบกลับ
+#             dispatcher.utter_message(text=response['text'] if isinstance(response, dict) else str(response))
+#         except Exception as e:
+#             dispatcher.utter_message(text="Sorry, I couldn't process your request.")
+#             print(f"Error during model inference: {e}")
+
+#         return []

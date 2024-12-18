@@ -1,35 +1,43 @@
-version: "3.1"
-
+version: '3.1'
 intents:
-  - bot_challenge
-  - ask_course_name
-  - nlu_fallback
-  - chit_chat_professor
-
+- ask_course_Prerequisites
+- ask_course_Prerequisites_en
+- ask_course_credit
+- ask_course_credit_en
+- ask_course_name
+- ask_course_name_en
+- bot_challenge
+- chit_chat_professor
+- nlu_fallback
 entities:
-  - course_code
-
+- course_code
+- course_code_en
 slots:
   course_code:
     type: text
+    influence_conversation: true
     mappings:
-      - type: from_entity
-        entity: course_code
-
+    - type: from_entity
+      entity: course_code
+  course_code_en:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: course_code_en
 responses:
-
   utter_chit_chat_professor:
-    - text: "สุดหล่อ"
-
+  - text: สุดหล่อ
   utter_iamabot:
-    - text: "I am a bot, powered by Rasa."
-
-
+  - text: I am a bot, powered by Rasa.
 actions:
-  - action_query_typhoon
-  - action_fetch_course_name
-
-
+- action_fetch_course_name
+- action_fetch_course_Prerequisites
+- action_fetch_course_name_en
+- action_query_typhoon
+- action_fetch_course_Prerequisites_en
+- action_fetch_course_credit
+- action_fetch_course_credit_en
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

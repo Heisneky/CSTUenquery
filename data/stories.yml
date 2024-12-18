@@ -14,4 +14,59 @@ stories:
   - story: ask course name
     steps:
       - intent: ask_course_name
+        entities:
+          - course_code
       - action: action_fetch_course_name
+
+  - story: ask course name en
+    steps:
+      - intent: ask_course_name_en
+        entities:
+          - course_code_en
+      - action: action_fetch_course_name_en
+
+  - story: ask course Prerequisites
+    steps:
+      - intent: ask_course_Prerequisites
+        entities:
+          - course_code
+      - action: action_fetch_course_Prerequisites
+
+  - story: ask course Prerequisites en
+    steps:
+      - intent: ask_course_Prerequisites_en
+        entities:
+          - course_code_en
+      - action: action_fetch_course_Prerequisites_en
+
+  - story: ask course Prerequisites 2
+    steps:
+      - intent: ask_course_name
+        entities:
+          - course_code
+      - action: action_fetch_course_name
+      - intent: ask_course_Prerequisites
+        entities:
+          - course_code
+      - action: action_fetch_course_Prerequisites
+
+  - story: ask course name en TU100 exam
+    steps:
+      - intent: ask_course_name_en
+        entities:
+          - course_code_en: "TU100"
+      - action: action_fetch_course_name_en
+
+  - story: ask course credit
+    steps:
+      - intent: ask_course_credit
+        entities:
+          - course_code
+      - action: action_fetch_course_credit
+
+  - story: ask course credit en
+    steps:
+      - intent: ask_course_credit_en
+        entities:
+          - course_code
+      - action: action_fetch_course_credit_en

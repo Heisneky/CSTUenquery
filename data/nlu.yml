@@ -1,45 +1,27 @@
 version: "3.1"
-
 nlu:
-
 - intent: bot_challenge
   examples: |
     - are you a bot?
     - are you a human?
     - am I talking to a bot?
     - am I talking to a human?
-
-- regex: course_code
-  examples: |
-    - "[ก-ฮ]{1,3}\.[0-9]{3}"
-
-- lookup: course_code
-  examples: |
-    - มธ.100
-    - มธ.102
-    - คพ.245
-    - สษ.295
-    - จ.252
-    - ศ.210
-    - ค.211
-    - คพ.218
-
 - intent: ask_course_name
   examples: |
-    - วิชานี้คือวิชาอะไรครับ [มธ.100](course_code)
-    - วิชา [คพ.245](course_code) ชื่อว่าอะไรคับ
-    - ชื่อเต็มของวิชา [สษ.295](course_code) คือ
-    - อะไรคือชื่อเต็มๆของ [จ.252](course_code)
+    - วิชานี้คือวิชาอะไรครับ [มธ.100] (course_code)
+    - วิชา [คพ.245] (course_code) ชื่อว่าอะไรคับ
+    - ชื่อเต็มของวิชา [สษ.295] (course_code) คือ
+    - อะไรคือชื่อเต็มๆของ [จ.252] (course_code)
     - วิชานี้ [ศ.210](course_code) มีชื่อว่าอะไร
     - วิชา [ค.211](course_code) มีชื่อวิชาว่าอะไร
-    - อะไรคือชื่อของ [คพ.218](course_code)
-    - ฉันอยากถามเรื่องชื่อ [คพ.218](course_code)
-    - ฉันอยากถามถึงชื่อ [คพ.251](course_code)
-    - ฉันอยากรู้ว่าวิชา [คพ.245](course_code) เป็นชื่อของวิชาอะไรหน่ะ
-    - ขอถามชื่อของ [คพ.403](course_code)
-    - ชื่อของ [คพ.300](course_code)
-    - ชื่อของ [คพ.234](course_code) คืออะไรคับ
-    - วิชานี้ [คพ.241](course_code) คือวิชาอะไรครับ
+    - อะไรคือชื่อของ [คพ.218] (course_code)
+    - ฉันอยากถามเรื่องชื่อ [คพ.218] (course_code)
+    - ฉันอยากถามถึงชื่อ [คพ.251] (course_code)
+    - ฉันอยากรู้ว่าวิชา [คพ.245] (course_code) เป็นชื่อของวิชาอะไรหน่ะ
+    - ขอถามชื่อของ [คพ.403] (course_code)
+    - ชื่อของ [คพ.300] (course_code)
+    - ชื่อของ [คพ.234] (course_code) คืออะไรคับ
+    - วิชานี้ [คพ.241] (course_code) คือวิชาอะไรครับ
     - อธิบายรายละเอียดของวิชานี้ [คพ.262] (course_code)
     - ฉันอยากรู้จัก [ค.211] (course_code)
     - ชื่อของ [ทม.201] (course_code)
@@ -55,8 +37,335 @@ nlu:
     - [สษ.395] (course_code) ชื่อ
     - อยากถามว่ารหัสวิชา [คพ.467] (course_code) ชื่อเต็มๆ ว่าอะไรครับ
     - แนะนำ [วท.301] (course_code) ให้ฉันที
-
-
+    - รหัสวิชานี้ [มธ.100] (course_code) คือวิชาอะไรครับ
+    - วิชา [คพ.245] (course_code) มีชื่อเต็มว่าอะไร
+    - ชื่อวิชา [สษ.295] (course_code) ในระบบคืออะไร
+    - ชื่อเต็มๆ ของวิชา [จ.252] (course_code) คืออะไร
+    - รหัส [ศ.210] (course_code) นี้มีชื่อวิชาอะไร
+    - ชื่อทางการของวิชา [ค.211] (course_code) คืออะไรครับ
+    - ชื่อเต็มของ [คพ.218] (course_code) หมายถึงวิชาอะไร
+    - ขอทราบชื่อวิชา [คพ.218] (course_code) ได้ไหมครับ
+    - รหัสวิชา [คพ.251] (course_code) เป็นของวิชาอะไร
+    - ฉันอยากทราบชื่อเต็มของรหัส [คพ.245] (course_code)
+    - รบกวนบอกชื่อของ [คพ.403] (course_code) ให้หน่อยครับ
+    - ชื่อเต็มของวิชา [คพ.300] (course_code) คืออะไรครับ
+    - [คพ.234] (course_code) มีชื่อว่าอะไร
+    - อะไรคือชื่อวิชาที่แท้จริงของ [คพ.241] (course_code)
+    - สามารถอธิบายเกี่ยวกับ [คพ.262] (course_code) ให้ฉันได้ไหม
+    - รหัส [ค.211] (course_code) นี้หมายถึงวิชาอะไร
+    - ขอข้อมูลชื่อวิชา [ทม.201] (course_code) หน่อยครับ
+    - อยากทราบชื่อวิชา [คพ.386] (course_code) จากรหัสนี้ครับ
+    - วิชาที่รหัส [คพ.390] (course_code) หมายถึงอะไร
+    - ช่วยหาชื่อวิชาให้ที [คพ.396] (course_code) ครับ
+    - ฉันต้องการทราบชื่อวิชา [คพ.397] (course_code)
+    - รหัสนี้ [คพ.403] (course_code) คือวิชาอะไร
+    - รบกวนช่วยบอกชื่อวิชา [คพ.434] (course_code) ที
+    - ขอทราบข้อมูลของวิชา [คพ.435] (course_code)
+    - ชื่อวิชาที่ตรงกับรหัส [พบ.291] (course_code) คืออะไรครับ
+    - อยากได้รายละเอียดเพิ่มเติมของวิชา [คพ.299] (course_code)
+    - [สษ.395] (course_code) มีชื่อในระบบว่าอะไร
+    - อะไรคือชื่อวิชาของรหัส [คพ.467] (course_code)
+    - ช่วยแนะนำวิชา [วท.301] (course_code) ให้ฉันหน่อยครับ
+    - รหัสวิชา [มธ.100] (course_code) นี้มีชื่อภาษาไทยว่าอะไร
+    - อยากรู้ว่าวิชานี้ [คพ.245] (course_code) ใช่ชื่ออะไรในระบบ
+    - [สษ.295] (course_code) มีชื่อเรียกในมหาวิทยาลัยว่าอะไร
+    - อธิบายชื่อเต็มของรหัส [จ.252] (course_code) ให้ทีครับ
+    - ขอข้อมูลเกี่ยวกับวิชา [ศ.210] (course_code) หน่อย
+    - รหัสนี้ [ค.211] (course_code) คือวิชาอะไรในหลักสูตร
+    - บอกชื่อเต็มของ [คพ.218] (course_code) ให้หน่อยครับ
+    - รหัสวิชา [คพ.251] (course_code) ตรงกับวิชาอะไร
+    - ชื่อวิชา [คพ.245] (course_code) ที่ใช้ในการลงทะเบียนคืออะไร
+    - ขอชื่อเต็มของ [คพ.403] (course_code) ที
+    - ขออธิบายวิชา [มธ.100] (course_code) ให้หน่อยครับ
+    - ช่วยอธิบายเกี่ยวกับวิชา [คพ.245] (course_code) ว่ามีรายละเอียดอย่างไร
+    - ขอข้อมูลของวิชา [สษ.295] (course_code) ให้ที
+    - อธิบายรายละเอียดของวิชา [จ.252] (course_code) ได้ไหมครับ
+    - ฉันอยากทราบข้อมูลเพิ่มเติมเกี่ยวกับวิชา [ศ.210] (course_code)
+    - รบกวนช่วยให้ข้อมูลเกี่ยวกับ [ค.211] (course_code) หน่อย
+    - ขอคำอธิบายเกี่ยวกับรหัสวิชา [คพ.218] (course_code)
+    - วิชา [คพ.251] (course_code) มีรายละเอียดอะไรบ้าง
+    - อธิบายความหมายของรหัสวิชา [คพ.245] (course_code) ให้ฉันหน่อย
+    - ฉันต้องการทราบรายละเอียดของ [คพ.403] (course_code)
+    - ช่วยให้ข้อมูลเกี่ยวกับรหัส [คพ.300] (course_code) ทีครับ
+    - รายละเอียดของ [คพ.234] (course_code) คืออะไร
+    - อธิบายรายละเอียดเพิ่มเติมเกี่ยวกับวิชา [คพ.241] (course_code)
+    - รหัสวิชา [คพ.262] (course_code) นี้มีข้อมูลอะไรบ้าง
+    - ขอข้อมูลเชิงลึกเกี่ยวกับวิชา [ค.211] (course_code)
+    - วิชา [ทม.201] (course_code) มีข้อมูลสำคัญอะไรที่ควรรู้บ้าง
+    - รบกวนอธิบายวิชา [คพ.386] (course_code) ให้ละเอียดกว่านี้หน่อย
+    - [คพ.390] (course_code) มีคำอธิบายอย่างไรบ้าง
+    - ช่วยแนะนำวิชา [คพ.396] (course_code) พร้อมข้อมูลที่เกี่ยวข้อง
+    - ฉันอยากทราบคำอธิบายแบบละเอียดเกี่ยวกับ [คพ.397] (course_code)
+    - ชื่อวิชา [คพ.403] (course_code) พร้อมคำอธิบายคืออะไร
+    - ข้อมูลและคำอธิบายของ [คพ.434] (course_code) คืออะไร
+    - รบกวนแนะนำวิชา [คพ.435] (course_code) ด้วยข้อมูลเชิงลึก
+    - วิชา [พบ.291] (course_code) มีคำอธิบายเกี่ยวกับอะไรบ้าง
+    - ขอรายละเอียดเชิงลึกเกี่ยวกับวิชา [คพ.299] (course_code)
+    - [สษ.395] (course_code) มีคำอธิบายว่าอะไร
+    - ช่วยให้ข้อมูลวิชา [คพ.467] (course_code) แบบละเอียดได้ไหมครับ
+    - ข้อมูลของวิชา [วท.301] (course_code) พร้อมคำอธิบายคืออะไร
+    - ขอข้อมูลพื้นฐานและคำอธิบายเกี่ยวกับรหัส [มธ.100] (course_code)
+    - [คพ.245] (course_code) คือวิชาอะไร มีข้อมูลอะไรบ้าง
+    - ฉันอยากทราบคำอธิบายเกี่ยวกับ [สษ.295] (course_code)
+    - รบกวนให้รายละเอียดวิชา [จ.252] (course_code) ให้หน่อยครับ
+    - มีข้อมูลเกี่ยวกับวิชา [ศ.210] (course_code) ไหม
+    - รหัสวิชา [ค.211] (course_code) นี้มีคำอธิบายอะไรเพิ่มเติมไหม
+    - ช่วยบอกข้อมูลของ [คพ.218] (course_code) แบบละเอียดให้ทีครับ
+    - รบกวนอธิบายวิชา [คพ.251] (course_code) พร้อมรายละเอียดหน่อยครับ
+    - ชื่อเต็มและข้อมูลสำคัญของวิชา [คพ.245] (course_code) คืออะไร
+    - ช่วยแนะนำข้อมูลเบื้องต้นของ [คพ.403] (course_code)
+    - ชวยดชอวชา [มธ.100](course_code) ใหม
+- intent: ask_course_name_en
+  examples: |
+    - What is the course name of [TU.100] (course_code_en)?
+    - What is [TU.100] (course_code_en)?
+    - Can you explain [TU.100] (course_code_en)?
+    - Can you tell me the name of the course [CS.245] (course_code_en)?
+    - What is the official name of [EL.295] (course_code_en)?
+    - Could you tell me the full name of the course [PY.252] (course_code_en)?
+    - I'd like to know the full name of the course with code [EC.210] (course_code_en).
+    - What is the course title for [MA.211] (course_code_en)?
+    - Do you know the full course name of [CS.218] (course_code_en)?
+    - Can you explain the name of the course [CS.218] (course_code_en)?
+    - I'm curious about the name of the course [CS.251] (course_code_en).
+    - Please tell me what course [CS.245] (course_code_en) refers to.
+    - What course does the code [CS.403] (course_code_en) represent?
+    - What is the name associated with [CS.300] (course_code_en)?
+    - Can you give me the name of [CS.234] (course_code_en)?
+    - Could you explain what course [CS.241] (course_code_en) is?
+    - Provide details about the course [CS.262] (course_code_en).
+    - I'd like to understand more about [MA.211] (course_code_en).
+    - What is the title of the course [HR.201] (course_code_en)?
+    - Can you provide the course name for the code [CS.386] (course_code_en)?
+    - What does the course code [CS.390] (course_code_en) stand for?
+    - Please find the name of the course [CS.396] (course_code_en) for me.
+    - I need to know the full name of [CS.397] (course_code_en).
+    - What course name corresponds to [CS.403] (course_code_en)?
+    - What is the proper name of [CS.434] (course_code_en)?
+    - Can you confirm the name of the course [CS.435] (course_code_en)?
+    - What is the course title for [BA.291] (course_code_en)?
+    - Explain the course details for [CS.299] (course_code_en).
+    - Do you know the name of the course [EL.395] (course_code_en)?
+    - I'd like to ask about the complete name of the course [CS.467] (course_code_en).
+    - Could you introduce the course with code [SC.301] (course_code_en)?
+    - What is the meaning of the course code [TU.100] (course_code_en)?
+    - Can you let me know the course name for [CS.241] (course_code_en)?
+    - Tell me about the course [CS.218] (course_code_en).
+    - What subject does the code [CS.251] (course_code_en) stand for?
+    - Can you clarify what course [CS.299] (course_code_en) refers to?
+    - What does the code [CS.435] (course_code_en) represent?
+    - I'd like to know the subject name for [CS.390] (course_code_en).
+    - What subject is represented by the code [EL.395] (course_code_en)?
+    - Can you share the details of the course [SC.301] (course_code_en)?
+    - Could you find the name of the subject [CS.396] (course_code_en)?
+    - Could you explain the course [TU.100] (course_code_en)?
+    - What is the full name of the course [CS.245] (course_code_en)?
+    - Please provide details about the course [EL.295] (course_code_en).
+    - Can you tell me more about the course [PY.252] (course_code_en)?
+    - I’d like to know more about the course [SC.210] (course_code_en).
+    - Could you give information about [MA.211] (course_code_en)?
+    - What does the course [CS.218] (course_code_en) cover?
+    - Can you explain [CS.251] (course_code_en) in detail?
+    - I'd like to ask about the details of [CS.245] (course_code_en).
+    - Could you share more information about [CS.403] (course_code_en)?
+    - What is [CS.300] (course_code_en), and what does it cover?
+    - Can you explain the details of [CS.234] (course_code_en)?
+    - What is the course [CS.241] (course_code_en) about?
+    - Could you describe the course [CS.262] (course_code_en) for me?
+    - I'd like to understand the details of [MA.211] (course_code_en).
+    - What are the key details of [TM.201] (course_code_en)?
+    - Can you provide more in-depth information about [CS.386] (course_code_en)?
+    - What is the description of the course [CS.390] (course_code_en)?
+    - Please provide an overview of the course [CS.396] (course_code_en).
+    - I'd like a detailed explanation of [CS.397] (course_code_en).
+    - What is the full name and description of [CS.403] (course_code_en)?
+    - Could you share insights about [CS.434] (course_code_en)?
+    - Please describe the course [CS.435] (course_code_en) in detail.
+    - What is the course [PB.291] (course_code_en) about?
+    - Could you explain the course [CS.299] (course_code_en)?
+    - What is the description of the course [EL.395] (course_code_en)?
+    - Could you provide detailed information about [CS.467] (course_code_en)?
+    - What is the full description of the course [ST.301] (course_code_en)?
+    - Could you give me the basic details about [TU.100] (course_code_en)?
+    - What is the course [CS.245] (course_code_en) about?
+    - I'd like to know the explanation for [EL.295] (course_code_en).
+    - Could you describe [PY.252] (course_code_en) for me?
+    - Do you have details about the course [SC.210] (course_code_en)?
+    - Is there more information available about [MA.211] (course_code_en)?
+    - Can you share the description of [CS.218] (course_code_en)?
+    - I'd like to know what [CS.251] (course_code_en) covers.
+    - What is the full name and key details of [CS.245] (course_code_en)?
+    - Please provide a brief overview of [CS.403] (course_code_en).
+    - What is the course name of [TU100](course_code_en)?
+- intent: ask_course_Prerequisites
+  examples: |
+    - ก่อนเรียนวิชา [มธ.100] (course_code) ต้องเรียนอะไรมาก่อน
+    - ถ้าอยากจะเรียน [คพ.245] (course_code) ต้องผ่านวิชาอะไรมาก่อน
+    - ก่อนเรียนวิชานี้ [สษ.295] (course_code) ฉันต้องเรียนวิชาอะไรมาบ้าง
+    - ฉันต้องเรียนอะไรมาบ้างถ้าอยากจะเรียน [จ.252] (course_code)
+    - จะเรียนวิชา [ศ.210] (course_code) ได้ต้องผ่านตัวไหนมาบ้าง
+    - ก่อนเรียนวิชา [คพ.299] (course_code) ฉันต้องเรียนวิชาไหนก่อน
+    - ถ้าจะเรียน [สษ.395] (course_code) ต้องเรียนวิชาอะไรมาแล้ว
+    - ถ้าจะเรียนวิชา [คพ.218] (course_code) ต้องมีประสบการณ์อะไรบ้าง
+    - ต้องเรียนวิชาไหนก่อนถึงจะเรียน [คพ.265] (course_code) ได้
+    - วิชา [ค.251] (course_code) ต้องเรียนวิชาใดมาก่อนบ้าง
+    - วิชา [วท.301] (course_code) ต้องการวิชาเบื้องต้นอะไร
+    - ฉันสามารถเรียน [คพ.220] (course_code) ได้เลยไหม หรือว่าต้องเรียนวิชาอื่นก่อน
+    - การเรียนวิชา [ค.250] (course_code) ต้องมีพื้นฐานวิชาไหน
+    - วิชา [คพ.241] (course_code) ต้องเรียนอะไรมาก่อนบ้าง
+    - ถ้าฉันอยากเรียน [ส.326] (course_code) จะต้องเรียนวิชาไหนก่อน
+    - ต้องผ่านวิชาอะไรถึงจะเรียน [คพ.300] (course_code) ได้
+    - ผมจะเรียน [ทม.201] (course_code) ได้ไหม
+    - ลงตัววิชานี้ได้ไหม [คพ.386] (course_code)
+    - [คพ.390] (course_code) ลงเรียนวิชานี้ได้ไหม
+    - สามารถลงเรียน [คพ.396] (course_code) ได้หรือไม่
+    - ถ้าฉันอยากเรียน [คพ.397] (course_code) ต้องเรียนอะไรก่อน
+    - เรียนไรก่อนถึงจะเรียน [คพ.403] (course_code) ได้
+    - ลงเรียน [คพ.434] (course_code) เลยได้ไหม
+    - อยากเรียน [คพ.435] (course_code) แต่ไม่รู้ว่าต้องเรียนอะไรก่อน
+    - วิชา [พบ.291] (course_code) จำเป็นต้องเรียนตัวไหนมาก่อนมั้ย
+    - อยากเรียน [คพ.299] (course_code) ทำยังไง
+    - [สษ.395] (course_code) ลงเรียนวิชานี้เลยได้ไหม
+    - เรียนวิชานี้ [คพ.467] (course_code) จำเป็นต้องเรียนตัวไหนก่อน
+    - อยากลง [วท.301] (course_code) แต่ไม่รู้ควรลงตัวไหนก่อน
+    - ก่อนลงวิชา [มธ.100] (course_code) ต้องเรียนวิชาอะไรมาก่อน?
+    - ถ้าจะเรียน [คพ.245] (course_code) ต้องผ่านวิชาอะไรมาแล้ว?
+    - วิชา [สษ.295] (course_code) มีวิชาไหนเป็นเงื่อนไขก่อนลงเรียนบ้าง?
+    - ถ้าฉันอยากลง [จ.252] (course_code) ต้องเรียนอะไรมาก่อน?
+    - การลงเรียน [ศ.210] (course_code) จำเป็นต้องมีพื้นฐานวิชาอะไร?
+    - ก่อนจะเรียน [คพ.299] (course_code) ต้องเรียนตัวไหนให้ผ่านก่อน?
+    - ต้องเรียนวิชาอะไรก่อนถึงจะสามารถลง [สษ.395] (course_code)?
+    - ถ้าฉันอยากลงเรียน [คพ.218] (course_code) มีเงื่อนไขวิชาอะไรมาก่อนบ้าง?
+    - ต้องผ่านวิชาไหนก่อนถึงจะสามารถเรียน [คพ.265] (course_code)?
+    - วิชา [ค.251] (course_code) ต้องการวิชาพื้นฐานอะไร?
+    - ถ้าฉันอยากเรียน [วท.301] (course_code) ต้องเตรียมตัวอย่างไร?
+    - ฉันสามารถลง [คพ.220] (course_code) ได้เลยไหม หรือว่าต้องผ่านตัวอื่นก่อน?
+    - การเรียน [คพ.250] (course_code) ต้องผ่านวิชาอะไรบ้าง?
+    - ก่อนที่จะเรียน [คพ.241] (course_code) จำเป็นต้องผ่านตัวไหนก่อน?
+    - วิชา [ส.326] (course_code) มีวิชาที่ต้องเรียนก่อนหรือไม่?
+    - ฉันต้องเรียนตัวไหนก่อนถึงจะสามารถลง [คพ.300] (course_code)?
+    - ถ้าฉันอยากลง [ทม.201] (course_code) ได้เลยหรือเปล่า?
+    - สามารถลงเรียน [คพ.386] (course_code) ได้ทันทีหรือไม่?
+    - [คพ.390] (course_code) ต้องมีพื้นฐานอะไรก่อนลงเรียน?
+    - การลง [คพ.396] (course_code) มีเงื่อนไขอะไรหรือเปล่า?
+    - ถ้าฉันจะเรียน [คพ.397] (course_code) ต้องผ่านตัวไหนก่อน?
+    - ต้องผ่านเงื่อนไขอะไรบ้างก่อนที่จะเรียน [คพ.403] (course_code)?
+    - การเรียน [คพ.434] (course_code) ต้องผ่านวิชาไหนก่อนหรือไม่?
+    - ถ้าฉันอยากลง [คพ.435] (course_code) มีข้อกำหนดวิชาอะไรก่อนหน้าบ้าง?
+    - วิชา [พบ.291] (course_code) ต้องผ่านตัวไหนก่อนถึงจะลงได้?
+    - อยากเรียน [คพ.299] (course_code) ต้องทำยังไง?
+    - ถ้าจะลงเรียน [สษ.395] (course_code) ต้องมีเงื่อนไขอะไรหรือไม่?
+    - วิชา [คพ.467] (course_code) มีข้อกำหนดวิชาเบื้องต้นหรือไม่?
+    - ถ้าจะลง [วท.301] (course_code) ต้องเรียนอะไรมาก่อน?
+    - ฉันจะลง [มธ.100] (course_code) ได้ ต้องผ่านวิชาอะไรบ้าง?
+    - วิชา [คพ.245] (course_code) ต้องการพื้นฐานอะไรก่อนเรียน?
+    - ถ้าจะเรียน [สษ.295] (course_code) ต้องเตรียมตัวอะไรบ้าง?
+    - การลงเรียน [จ.252] (course_code) มีเงื่อนไขอะไรที่ต้องรู้?
+    - อยากเรียน [ศ.210] (course_code) ต้องผ่านตัวไหนก่อน?
+    - ฉนตองเรยนอะไรมาบางถาอยากจะเรยน [คพ.399](course_code)
+    - ถาฉนอยากเรยน [คพ.111](course_code) จะตองเรยนวชาไหนกอน
+    - ลงเรยน [คพ.299](course_code) เลยไดไหม
+- intent: ask_course_Prerequisites_en
+  examples: |
+    - What courses are prerequisites for [TU.100] (course_code_en)?
+    - Do I need to complete any course before taking [CS.245] (course_code_en)?
+    - What do I need to study before I can take [EL.295] (course_code_en)?
+    - Which courses should I take first if I want to study [PY.252] (course_code_en)?
+    - Can I enroll in [SC.210] (course_code_en) without any prerequisites?
+    - What prior knowledge or courses are required to take [CS.299] (course_code_en)?
+    - Are there any prerequisite courses for [EL.395] (course_code_en)?
+    - If I want to take [CS.218] (course_code_en), what should I study beforehand?
+    - Which course should I complete before enrolling in [CS.265] (course_code_en)?
+    - What are the prerequisites for [CS.251] (course_code_en)?
+    - What foundational knowledge is needed for [ST.301] (course_code_en)?
+    - Can I take [CS.220] (course_code_en) directly, or do I need to complete another course first?
+    - What background knowledge is required for [CS.250] (course_code_en)?
+    - What courses do I need to complete before [CS.241] (course_code_en)?
+    - Which courses are neceELary before enrolling in [ST.326] (course_code_en)?
+    - What must I complete to be eligible for [CS.300] (course_code_en)?
+    - Am I eligible to take [TM.201] (course_code_en)?
+    - Can I register for [CS.386] (course_code_en) right away?
+    - Is [CS.390] (course_code_en) open for me to enroll in now?
+    - Can I take [CS.396] (course_code_en) without completing any prior courses?
+    - What should I complete before taking [CS.397] (course_code_en)?
+    - What are the requirements to take [CS.403] (course_code_en)?
+    - Can I enroll directly in [CS.434] (course_code_en)?
+    - I want to study [CS.435] (course_code_en), but I’m not sure what courses are needed beforehand.
+    - Is it mandatory to complete other courses before taking [PB.291] (course_code_en)?
+    - How can I enroll in [CS.299] (course_code_en)?
+    - Is [EL.395] (course_code_en) available for me to take immediately?
+    - What are the prerequisites for [CS.467] (course_code_en)?
+    - I want to enroll in [ST.301] (course_code_en), but I don’t know which courses to take first.
+    - Do I need any prior courses to be eligible for [TU.100] (course_code_en)?
+    - Are there any specific requirements to study [CS.245] (course_code_en)?
+    - What is required before I can take [EL.295] (course_code_en)?
+    - If I want to take [PY.252] (course_code_en), do I need to prepare anything in advance?
+    - What steps should I take before enrolling in [SC.210] (course_code_en)?
+- intent: ask_course_credit
+  examples: |
+    - วิชานี้มีหน่วยกิตเท่าไหร่ครับ [มธ.100] (course_code)
+    - วิชา [คพ.245] (course_code) มีหน่วยกิตเท่าไหร่
+    - [สษ.295] (course_code) หน่วยกิตเท่าไหร่
+    - หน่วยกิตของ [จ.252] (course_code)
+    - หน่วยกิตของวิชา [ศ.210](course_code) มีเท่าใด
+    - วิชา [ค.211](course_code) มีหน่วยกิตมากเท่าไร
+    - วิชา [คพ.218] (course_code) มรหน่วยกิตเท่าไหร่ครับ
+    - ผมอยากทราบว่า [คพ.218] (course_code) มีหน่วยกิตเท่าไร
+    - ต้องการรู้หน่วยกิตของ [คพ.251] (course_code)
+    - ฉันอยากรู้ว่าวิชา [คพ.245] (course_code) เมีหน่วยกิตเท่าไหร่
+    - ขอถามหน่วยกิตของ [คพ.403] (course_code)
+    - หน่วยกิจของ [คพ.300] (course_code)
+    - หน่วยกิต [คพ.234] (course_code) คืออะไรคับ
+    - วิชานี้ [คพ.241] (course_code) หน่วยกิตเท่าไหร่
+    - วิชารหัส [คพ.262] (course_code) มีหน่วยกิตเท่าไหร่คับ
+    - ฉันอยากรู้ว่า [ค.211] (course_code) มีหน่วยกิตเท่าไหร่
+    - วิชา [ทม.201] (course_code) มีชั่วโมงเรียนแบบใด
+    - รหัสวิชา [คพ.386] (course_code) หน่วยกิจเท่าไหร่ครับ
+    - [คพ.390] (course_code) หน่วยกิต
+    - การเรียนของ [คพ.396] (course_code) เป็นแบบใด
+    - ขอทราบหน่วยกิต [คพ.397] (course_code) หน่อยครับ
+    - [คพ.403] (course_code) หน่วยกิต
+    - หน่วยกิตเท่าไหร่ [คพ.434] (course_code)
+    - ช่วยดูหน่วยกิตของ [คพ.435] (course_code) ให้ที
+    - วิชา [พบ.291] (course_code) หน่วยกิจ
+    - [คพ.299] (course_code) หน่วยกิตเยอะไหม
+    - [สษ.395] (course_code) หน่วยกิตเยอะแค่ไหน
+- intent: ask_course_credit_en
+  examples: |
+    - How many credits does [TU.100] (course_code_en) have?
+    - What are the credits for [CS.245] (course_code_en)?
+    - [EL.295] (course_code_en), how many credits does it have?
+    - How many credits for [PY.252] (course_code_en)?
+    - How many credits does the course [MA.210] (course_code_en) have?
+    - What is the credit count for [CS.211] (course_code_en)?
+    - How many credits are assigned to [BA.218] (course_code_en)?
+    - I want to know how many credits [CS.218] (course_code_en) has.
+    - Could you tell me the credits for [CS.251] (course_code_en)?
+    - I'd like to know how many credits [CS.245] (course_code_en) has.
+    - Please provide the credits for [CS.403] (course_code_en).
+    - What is the credit value of [CS.300] (course_code_en)?
+    - [CS.234] (course_code_en): How many credits is it worth?
+    - How many credits does [CS.241] (course_code_en) have?
+    - What are the credits for course code [CS.262] (course_code_en)?
+    - I’d like to know the credits for [CS.211] (course_code_en).
+    - How many class hours and credits does [MU.201] (course_code_en) have?
+    - How many credits are allocated to [CS.386] (course_code_en)?
+    - [CS.390] (course_code_en), credits?
+    - What type of credits does [CS.396] (course_code_en) include?
+    - Please tell me the credits for [CS.397] (course_code_en).
+    - Credits of [CS.403] (course_code_en).
+    - [CS.434] (course_code_en), how many credits does it have?
+    - Can you check the credits for [CS.435] (course_code_en) for me?
+    - What is the credit value for [BA.291] (course_code_en)?
+    - Is [CS.299] (course_code_en) a high-credit course?
+    - How many credits are there for [EL.395] (course_code_en)?
+    - Does [CS.410] (course_code_en) have many credits?
+    - How many credits does [CS.420] (course_code_en) require for completion?
+    - What is the total credit load of [CS.450] (course_code_en)?
+    - [CS.460] (course_code_en): Is it a low-credit course?
+    - Could you list the credit details for [CS.470] (course_code_en)?
+    - How many credits does [CS.480] (course_code_en) offer?
+    - [CS.499] (course_code_en), what is the total credit value?
 - intent: chit_chat_professor
   examples: |
     - อาจารย์ฐาปนา
@@ -68,3 +377,263 @@ nlu:
     - นายฐาปนา
     - อาจารย์ที่ชื่อฐาปนา
     - เล่าเรื่องอาจารย์ฐาปนา
+- regex: course_code
+  examples: |
+    - "[ก-ฮ]{1,3}\.[0-9]{3}"
+- regex: course_code_en
+  examples: |
+    - "[a-zA-Z]{1,3}[0-9]{3}"
+- lookup: course_code
+  examples: |
+    - พบ.291
+    - คพ.101
+    - คพ.102
+    - คพ.103
+    - คพ.104
+    - คพ.111
+    - คพ.112
+    - คพ.201
+    - คพ.213
+    - คพ.216
+    - คพ.217
+    - คพ.218
+    - คพ.221
+    - คพ.222
+    - คพ.233
+    - คพ.234
+    - คพ.241
+    - คพ.245
+    - คพ.246
+    - คพ.251
+    - คพ.253
+    - คพ.254
+    - คพ.262
+    - คพ.264
+    - คพ.265
+    - คพ.266
+    - คพ.267
+    - คพ.285
+    - คพ.299
+    - คพ.300
+    - คพ.301
+    - คพ.302
+    - คพ.303
+    - คพ.304
+    - คพ.305
+    - คพ.311
+    - คพ.312
+    - คพ.314
+    - คพ.319
+    - คพ.320
+    - คพ.322
+    - คพ.324
+    - คพ.325
+    - คพ.326
+    - คพ.327
+    - คพ.328
+    - คพ.329
+    - คพ.330
+    - คพ.331
+    - คพ.332
+    - คพ.333
+    - คพ.334
+    - คพ.335
+    - คพ.337
+    - คพ.339
+    - คพ.340
+    - คพ.345
+    - คพ.346
+    - คพ.347
+    - คพ.348
+    - คพ.350
+    - คพ.351
+    - คพ.352
+    - คพ.353
+    - คพ.354
+    - คพ.355
+    - คพ.356
+    - คพ.357
+    - คพ.360
+    - คพ.361
+    - คพ.364
+    - คพ.366
+    - คพ.367
+    - คพ.368
+    - คพ.369
+    - คพ.370
+    - คพ.373
+    - คพ.374
+    - คพ.375
+    - คพ.376
+    - คพ.377
+    - คพ.378
+    - คพ.379
+    - คพ.381
+    - คพ.382
+    - คพ.384
+    - คพ.385
+    - คพ.386
+    - คพ.389
+    - คพ.390
+    - คพ.396
+    - คพ.397
+    - คพ.399
+    - คพ.403
+    - คพ.404
+    - คพ.434
+    - คพ.435
+    - คพ.438
+    - คพ.450
+    - คพ.451
+    - คพ.467
+    - ศ.210
+    - สษ.295
+    - สษ.395
+    - ทม.201
+    - ค.211
+    - จ.252
+    - วท.301
+    - ส.216
+    - ส.326
+    - มธ.050
+    - มธ.100
+    - มธ.101
+    - มธ.102
+    - มธ.103
+    - มธ.104
+    - มธ.105
+    - มธ.106
+    - มธ.107
+    - มธ.108
+    - มธ.109
+    - มธ.122
+    - มธ.142
+    - มธ.143
+    - มธ.152
+- lookup: course_code_en
+  examples: |
+    - BA291
+    - CS101
+    - CS102
+    - CS103
+    - CS104
+    - CS111
+    - CS112
+    - CS201
+    - CS213
+    - CS216
+    - CS217
+    - CS218
+    - CS221
+    - CS222
+    - CS233
+    - CS234
+    - CS241
+    - CS245
+    - CS246
+    - CS251
+    - CS253
+    - CS254
+    - CS262
+    - CS264
+    - CS265
+    - CS266
+    - CS267
+    - CS285
+    - CS299
+    - CS300
+    - CS301
+    - CS302
+    - CS303
+    - CS304
+    - CS305
+    - CS311
+    - CS312
+    - CS314
+    - CS319
+    - CS320
+    - CS322
+    - CS324
+    - CS325
+    - CS326
+    - CS327
+    - CS328
+    - CS329
+    - CS330
+    - CS331
+    - CS332
+    - CS333
+    - CS334
+    - CS335
+    - CS337
+    - CS339
+    - CS340
+    - CS345
+    - CS346
+    - CS347
+    - CS348
+    - CS350
+    - CS351
+    - CS352
+    - CS353
+    - CS354
+    - CS355
+    - CS356
+    - CS357
+    - CS360
+    - CS361
+    - CS364
+    - CS366
+    - CS367
+    - CS368
+    - CS369
+    - CS370
+    - CS373
+    - CS374
+    - CS375
+    - CS376
+    - CS377
+    - CS378
+    - CS379
+    - CS381
+    - CS382
+    - CS384
+    - CS385
+    - CS386
+    - CS389
+    - CS390
+    - CS396
+    - CS397
+    - CS399
+    - CS403
+    - CS404
+    - CS434
+    - CS435
+    - CS438
+    - CS450
+    - CS451
+    - CS467
+    - EC210
+    - EL295
+    - EL395
+    - HR201
+    - MA211
+    - PY252
+    - SC301
+    - ST216
+    - ST326
+    - TU050
+    - TU100
+    - TU101
+    - TU102
+    - TU103
+    - TU104
+    - TU105
+    - TU106
+    - TU107
+    - TU108
+    - TU109
+    - TU122
+    - TU142
+    - TU143
+    - TU152
