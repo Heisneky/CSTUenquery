@@ -1,4 +1,26 @@
 # CSTUenquery
-### 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
-project
 
+## project
+
+ขั้นตอนการเปิดใช้งาน
+```
+rasa run --enable-api
+```
+```
+python .\line_connector.py
+```
+```
+rasa run actions
+```
+```
+ngrok http 5000
+```
+
+
+ปล. แก้ webhook URL บน line developer ทุกครั้งเนื่องจากไม่มีงบแล้วครับ
+
+
+format : 
+https://<ก็อบมา>/webhook
+ตัวอย่าง
+> https://901a-180-180-142-6.ngrok-free.app/webhook
