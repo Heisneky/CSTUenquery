@@ -5,6 +5,7 @@ from rasa_sdk.executor import CollectingDispatcher
 from typing import Any, Text, Dict, List
 from rasa_sdk.events import SlotSet
 import mysql.connector
+import re
 
 class ActionFetchCoursePrerequisites(Action):
     def name(self) -> Text:
@@ -79,12 +80,22 @@ class ActionFetchCourseName(Action):
         # ดึง course_code จาก slot ที่ผู้ใช้ระบุ
         course_code = tracker.get_slot('course_code')
 
-        # ใช้ print() เพื่อแสดงค่าของ course_code
+        # ใช้ print() เพื่อแสดงค่าของ course_code ก่อน normalize
         print(f"Received course_code: {course_code}")
 
         if not course_code:
             dispatcher.utter_message(text="กรุณาระบุรหัสวิชาที่ถูกต้อง")
             return []
+
+        # ขั้นตอนการ normalize course_code
+        # 1. ลบช่องว่างที่ไม่จำเป็น
+        # 2. แปลงรหัส เช่น กก111 -> กก.111 (ใส่ '.' หลังอักขระไทย 2 ตัวแรก ถ้ายังไม่มี)
+        normalized_course_code = re.sub(r'\s+', '', course_code)  # ลบช่องว่าง
+        if re.match(r'^[ก-ฮ]{2}\d+$', normalized_course_code):  # ตรวจสอบรูปแบบที่ยังไม่มีจุด
+            normalized_course_code = f"{normalized_course_code[:2]}.{normalized_course_code[2:]}"
+
+        # ใช้ print() เพื่อตรวจสอบค่า normalized_course_code
+        print(f"Normalized course_code: {normalized_course_code}")
 
         # เชื่อมต่อฐานข้อมูล MySQL
         try:
@@ -99,7 +110,7 @@ class ActionFetchCourseName(Action):
             cursor = connection.cursor()
 
             # Query เพื่อดึงชื่อวิชาจากรหัสวิชา
-            cursor.execute("SELECT courseName_TH, courseDescrip_TH FROM `courses-61` WHERE courseID_TH=%s", (course_code,))
+            cursor.execute("SELECT courseName_TH, courseDescrip_TH FROM `courses-61` WHERE courseID_TH=%s", (normalized_course_code,))
 
             course_name_and_description = cursor.fetchone()
 
@@ -110,12 +121,12 @@ class ActionFetchCourseName(Action):
                 # course_name_and_description[0] คือ courseName_TH
                 # course_name_and_description[1] คือ courseDescrip_TH
                 response = (
-                    f"ชื่อวิชาของ {course_code} คือ {course_name_and_description[0]} "
+                    f"ชื่อวิชาของ {normalized_course_code} คือ {course_name_and_description[0]} "
                     f"\nโดยจะมีเนื้อหาประมาณนี้ครับ:\n{course_name_and_description[1]}"
                 )
 
             else:
-                response = f"ไม่พบข้อมูลสำหรับรหัสวิชา {course_code}"
+                response = f"ไม่พบข้อมูลสำหรับรหัสวิชา {normalized_course_code}"
 
             dispatcher.utter_message(text=response)
 
